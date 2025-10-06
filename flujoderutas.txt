@@ -1,0 +1,17 @@
+(index.js)
+   app.use("/api/v1/characters", charactersRouter);
+
+        │
+        ▼
+(routes/characterRoutes.js)
+   GET "/"       → getAllCharacters
+   GET "/:id"    → getCharacterById
+   POST "/"      → createCharacter
+   PUT "/:id"    → updateCharacter
+   DELETE "/:id" → deleteCharacter
+
+        │
+        ▼
+(controllers/characterControllers.js)
+   Llama a Mongoose (models/Character.js)
+   para interactuar con la base de datos
