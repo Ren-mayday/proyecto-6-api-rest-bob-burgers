@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const roles = [
   "Belcher family",
   "Sister",
+  "Brother",
   "Belcher's Family Friend",
   "Chef",
   "Owner of a Restaurant",
@@ -14,6 +15,7 @@ const roles = [
   "Handyman",
   "Customer",
   "Funeral Director",
+  "Unemployed",
   "Other",
 ];
 
