@@ -4,12 +4,16 @@ const mongoose = require("mongoose");
 const roles = [
   "Belcher family",
   "Sister",
-  "Friend",
+  "Belcher's Family Friend",
+  "Chef",
+  "Owner of a Restaurant",
   "Landlord",
   "Archenemy",
   "Teacher",
   "Neighbor",
+  "Handyman",
   "Customer",
+  "Funeral Director",
   "Other",
 ];
 
@@ -18,7 +22,7 @@ const characterSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     age: { type: Number },
-    role: { type: String, enum: roles, default: "Other" },
+    role: { type: [String], enum: roles, default: ["Other"] },
     description: { type: String, trim: true },
     img: {
       type: String,
