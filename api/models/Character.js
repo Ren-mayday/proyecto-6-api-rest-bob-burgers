@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 
 const roles = [
   "Belcher family",
+  "Father",
+  "Mother",
   "Sister",
   "Brother",
   "Belcher's Family Friend",
