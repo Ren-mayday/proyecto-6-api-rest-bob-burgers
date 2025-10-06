@@ -88,3 +88,7 @@ Consideraciones
 Actualizaciones de arrays no borran datos existentes.
 Se evita duplicidad en arrays de referencias.
 La semilla inicial (seed) aún no está implementada.
+
+Seeds
+La carpeta data contiene los archivos con los arrays de objetos de ejemplo, por ejemplo: data/seedEpisodes.js.
+El archivo utils/Seeds/episodes.seeds.js contiene el script que inserta estos datos en la base de datos automáticamente.
