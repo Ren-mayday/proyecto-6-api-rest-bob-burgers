@@ -26,7 +26,20 @@ const characterSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
     age: { type: Number },
-    role: { type: [String], enum: roles, default: ["Other"] },
+    role: {
+      type: [String],
+      enum: roles,
+      default: ["Other"],
+      set: (values) => {
+        if (!Array.isArray(values)) return values;
+        return values.map((v) => {
+          // primera letra mayúscula, resto minúscula
+          const lower = v.toLowerCase();
+          const found = roles.find((r) => r.toLowerCase() === lower);
+          return found || v; // usa la versión oficial del enum si existe
+        });
+      },
+    },
     description: { type: String, trim: true },
     img: {
       type: String,
