@@ -3,6 +3,7 @@ const {
   getCharacterById,
   createCharacter,
   updateCharacter,
+  removeEpisodesFromCharacter,
   deleteCharacter,
 } = require("../controllers/characterControllers");
 
@@ -14,6 +15,7 @@ charactersRouter.get("/", getAllCharacters); // GET todos
 charactersRouter.get("/:id", getCharacterById); // GET por id
 charactersRouter.post("/", createCharacter); // POST crear
 charactersRouter.put("/:id", updateCharacter); // PUT actualizar
+charactersRouter.delete("/:id/episodes", removeEpisodesFromCharacter); // eliminar episodios del personaje sin borrar el personaje
 charactersRouter.delete("/:id", deleteCharacter); // DELETE eliminar
 
 module.exports = charactersRouter;

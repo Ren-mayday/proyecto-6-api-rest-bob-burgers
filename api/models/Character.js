@@ -17,6 +17,7 @@ const roles = [
   "Handyman",
   "Customer",
   "Funeral Director",
+  "Singer",
   "Unemployed",
   "Other",
 ];
@@ -25,19 +26,21 @@ const roles = [
 const characterSchema = new mongoose.Schema(
   {
     name: { type: String, required: true, trim: true },
-    age: { type: Number },
+    age: { type: Number, required: true },
     role: {
       type: [String],
       enum: roles,
+      required: true,
       default: ["Other"],
       set: (values) => {
-        if (!Array.isArray(values)) return values;
-        return values.map((v) => {
-          // primera letra mayúscula, resto minúscula
-          const lower = v.toLowerCase();
-          const found = roles.find((r) => r.toLowerCase() === lower);
-          return found || v; // usa la versión oficial del enum si existe
-        });
+        if (Array.isArray(values))
+          return values.map((v) => {
+            // primera letra mayúscula, resto minúscula
+            const lower = v.toLowerCase();
+            const found = roles.find((r) => r.toLowerCase() === lower);
+            return found || v; // usa la versión oficial del enum si existe
+          });
+        return ["Other"]; // Por seguridad si no es array
       },
     },
     description: { type: String, trim: true },
@@ -49,7 +52,18 @@ const characterSchema = new mongoose.Schema(
       message: (props) => `${props.value} no es una URL válida de imagen`,
     },
     // Relación entre Character y Episodes
-    episodes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Episode" }],
+    episodes: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Episode" }],
+      set: (values) => {
+        // Si no es un array (por ejemplo, un solo ObjectId), conviértelo en array
+        const array = Array.isArray(values) ? values : [values];
+
+        // Eliminar ducplicados (convertimos los IDs a string para comparar)
+        const uniqueIds = [...new Set(array.map((v) => v.toString()))];
+
+        return uniqueIds;
+      },
+    },
   },
   {
     timestamps: true,

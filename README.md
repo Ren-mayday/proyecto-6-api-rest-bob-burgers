@@ -21,7 +21,7 @@ src/
 │ └─ routes/ # Endpoints
 ├─ config/ # DB y configuración
 ├─ middleware/ # Middlewares
-├─ utils/ # Funciones auxiliares
+├─ utils/ # Funciones auxiliares (seeds)
 └─ index.js # Servidor principal
 .env # Variables sensibles
 .gitignore # Ignora node_modules y .env
@@ -72,8 +72,9 @@ Characters
 | GET | /api/v1/characters | Todos los personajes |
 | GET | /api/v1/characters/:id | Personaje por ID |
 | POST | /api/v1/characters | Crear personaje |
-| PUT | /api/v1/characters/:id | Actualizar personaje |
+| PUT | /api/v1/characters/:id | Actualizar datos o añadir episodios/roles a un personaje |
 | DELETE | /api/v1/characters/:id | Eliminar personaje |
+| DELETE | /api/v1/characters/:id/episodes | Eliminar episodios asociados a un personaje (sin borrarlo) |
 
 Episodes
 | Método | Ruta | Acción |
@@ -81,12 +82,20 @@ Episodes
 | GET | /api/v1/episodes | Todos los episodios |
 | GET | /api/v1/episodes/:id | Episodio por ID |
 | POST | /api/v1/episodes | Crear episodio |
-| PUT | /api/v1/episodes/:id | Actualizar episodio |
+| PUT | /api/v1/episodes/:id | Actualizar datos o añadir personajes al episodio |
 | DELETE | /api/v1/episodes/:id | Eliminar episodio |
+| DELETE | /api/v1/episodes/:id/characters | Eliminar personajes asociados a un episodio (sin borrarlo) |
 
 Consideraciones
-Actualizaciones de arrays no borran datos existentes.
+Actualizaciones de arrays no borran datos existentes. $addToSet evita sobreescritura
+
+- updateData.$addtoSet = { episodes: { $each: episodes } };
+- updateData.$addToSet = { episodes: { $each: episodes } };
+
 Se evita duplicidad en arrays de referencias.
+
+- El uso de $addToSet (en lugar de $push) garantiza que no se inserten duplicados en los arrays episodes o characters.
+
 La semilla inicial (seed) aún no está implementada.
 
 Seeds

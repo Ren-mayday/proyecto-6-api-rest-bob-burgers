@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "episodes.seeds": "node ./utils/Seeds/episodes.seeds.js"
+    "seed:episodes": "node data/seedEpisodes.js",
+    "seed:characters": "node data/seedCharacters.js",
+    "seed:all": "npm run seed:episodes && npm run seed:characters"
   },
   "keywords": [],
   "author": "",
